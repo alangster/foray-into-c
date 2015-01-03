@@ -8,36 +8,56 @@
 #include <stdlib.h>
 #include <string.h>
 
-int all_caps(char const *s);
+int all_caps(char s[]);
+int is_bye(char s[]);
+void format(char *s[]);
 
 int main(void)
 {
-	char greet, response[] = "NO! NOT SINCE 1925!", bye[] = "BYE!", speak_up[] = "SPEAK UP, SONNY!";
+	char c, greet[100], response[] = "NO! NOT SINCE 1925!", speak_up[] = "SPEAK UP, SONNY!";
+	int i;
 
-	while (scanf("%s/n", &greet)) {
-		if (!all_caps(&greet))
+	for (i = 0; ;) {
+		scanf("%99s", greet);
+		if (!all_caps(greet))
 			printf("%s\n", speak_up);
 		else
-			if (*greet == bye) {
+			if (is_bye(greet)) {
 				printf("LATER!\n");
 				exit(1);
 			} else
 				printf("%s\n", response);
 	}
+
 	return 0;
 };
 
-int all_caps(char const *s)
+void format(char *s[]) 
 {
-	int n, i;
-	char str[strlen(s)];
+	int n = sizeof(*s);
 
-	n = strlen(s);
-	for (i = 0; i < n - 1; ++i) {
+	for (; n >= 0; --n) {
+		if (*s[n] == '\n')
+			s[n] = '\0';
+	}
+};
+
+int is_bye(char s[])
+{
+	char bye[100] = "BYE!";
+	
+	return (strcmp(s, bye) == 0 ? 1 : 0);
+};
+
+int all_caps(char s[])
+{
+	int i = 0;
+
+	if (s[i] == '\n')
+		return 0;
+	for (i = 0; s[i] != '\0'; ++i) {
 		if (s[i] >= 'a' && s[i] <= 'z')
 			return 0;
 	}
-	if (s[i] != '!')
-		return 0;
 	return 1;
 }
