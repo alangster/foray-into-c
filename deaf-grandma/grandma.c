@@ -10,7 +10,6 @@
 
 int all_caps(char s[]);
 int is_bye(char s[]);
-void format(char *s[]);
 
 int main(void)
 {
@@ -32,20 +31,10 @@ int main(void)
 	return 0;
 };
 
-void format(char *s[]) 
-{
-	int n = sizeof(*s);
-
-	for (; n >= 0; --n) {
-		if (*s[n] == '\n')
-			s[n] = '\0';
-	}
-};
-
 int is_bye(char s[])
 {
 	char bye[100] = "BYE!";
-	
+
 	return (strcmp(s, bye) == 0 ? 1 : 0);
 };
 
